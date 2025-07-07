@@ -1,0 +1,20 @@
+CUISINE_STYLES = [
+    "japonais",
+    "argentin",
+    "méditerranéen",
+    "italien",
+    "vietnamien",
+    "indien",
+    "épices douces",
+    "chaud",
+    "froid",
+    "frais",
+    "piquant",
+    "végétarien",
+    "végétalien",
+    "street food",
+    "traditionnel",
+    "rapide",
+    "confort food",
+    "haut de gamme"
+]

@@ -1,0 +1,67 @@
+{
+  "title": "Dahl de lentilles corail à la tomate et au gingembre",
+  "ingredients_input": [
+    {
+      "quantity": "200g",
+      "name": "lentilles corail"
+    },
+    {
+      "quantity": "lait",
+      "name": "de coco"
+    },
+    {
+      "quantity": "1",
+      "name": "tomate"
+    },
+    {
+      "quantity": "1",
+      "name": "gingembre"
+    },
+    {
+      "quantity": "1",
+      "name": "curcuma"
+    }
+  ],
+  "generated_ingredients": {
+    "title": "Dahl de lentilles corail à la tomate et au gingembre",
+    "ingredients": [
+      "200g de lentilles corail",
+      "200ml de lait de coco",
+      "1 tomate",
+      "1 morceau de gingembre",
+      "1 cuillère à café de curcuma"
+    ]
+  },
+  "steps": {
+    "title": "Dahl de lentilles corail à la tomate et au gingembre",
+    "steps": [
+      "Rincez les lentilles corail à l'eau froide et égouttez-les à l'aide d'une passoire.",
+      "Épluchez et râpez le gingembre à l'aide d'une râpe.",
+      "Coupez la tomate en dés à l'aide d'un couteau de chef et d'une planche à découper.",
+      "Dans une casserole de taille moyenne, mélangez les lentilles corail, la tomate coupée en dés, le gingembre râpé et le curcuma.",
+      "Ajoutez de l'eau jusqu'à ce que les lentilles soient bien couvertes.",
+      "Portez à ébullition, puis réduisez le feu et laissez mijoter à couvert pendant environ 20-25 minutes, jusqu'à ce que les lentilles soient tendres.",
+      "Ajoutez le lait de coco et mélangez bien avec une cuillère en bois.",
+      "Laissez cuire encore 5 minutes à feu doux.",
+      "Goûtez et ajustez l'assaisonnement si nécessaire.",
+      "Servez chaud."
+    ],
+    "utensils_required": [
+      "colander",
+      "grater",
+      "chef’s knife",
+      "cutting board",
+      "saucepan",
+      "lid",
+      "wooden spoon"
+    ]
+  },
+  "tags": {
+    "style": [
+      "végétarien",
+      "indien"
+    ],
+    "difficulte": "moyen",
+    "calories": "moyen"
+  }
+}

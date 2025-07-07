@@ -1,0 +1,59 @@
+{
+  "title": "Sushi bowl maison à la feuille de nori",
+  "ingredients_input": [
+    {
+      "quantity": "200g",
+      "name": "riz"
+    },
+    {
+      "quantity": "100g",
+      "name": "saumon cru"
+    },
+    {
+      "quantity": "1",
+      "name": "avocat"
+    },
+    {
+      "quantity": "sauce",
+      "name": "soja"
+    },
+    {
+      "quantity": "1",
+      "name": "feuille de nori"
+    }
+  ],
+  "generated_ingredients": {
+    "title": "Sushi bowl maison à la feuille de nori",
+    "ingredients": [
+      "200g de riz",
+      "100g de saumon cru",
+      "1 avocat",
+      "sauce soja",
+      "1 feuille de nori"
+    ]
+  },
+  "steps": {
+    "title": "Sushi bowl maison à la feuille de nori",
+    "steps": [
+      "Rincez le riz sous l'eau froide jusqu'à ce que l'eau soit claire.",
+      "Faites cuire le riz dans une casserole avec de l'eau selon les instructions sur l'emballage. Une fois cuit, laissez-le refroidir.",
+      "Pendant que le riz cuit, coupez le saumon cru en petits cubes à l'aide du couteau de chef et de la planche à découper.",
+      "Coupez l'avocat en deux, retirez le noyau, puis coupez la chair en dés.",
+      "À l'aide des ciseaux de cuisine, coupez la feuille de nori en fines lanières.",
+      "Dans un bol, mélangez délicatement le riz cuit et refroidi avec les lanières de nori à l'aide d'une cuillère en bois.",
+      "Ajoutez les cubes de saumon et les dés d'avocat au riz et mélangez légèrement.",
+      "Servez le sushi bowl dans un bol et arrosez de sauce soja selon votre goût."
+    ],
+    "utensils_required": [
+      "couteau de chef",
+      "planche à découper",
+      "casserole",
+      "cuillère en bois",
+      "ciseaux de cuisine",
+      "bol"
+    ]
+  },
+  "tags": [
+    "japonais"
+  ]
+}

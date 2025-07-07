@@ -2,20 +2,27 @@ import json
 import re
 from mistralai import UserMessage, SystemMessage
 
-def generate_titles_json(client, model_name, ingredients, dietary_preference=None, utensils=None):
+def generate_titles_json(client, model_name, ingredients, utensils=None, tags=None):
     ing = ", ".join(ingredients)
-    dietary = f"Dietary preference: {dietary_preference}" if dietary_preference else ""
     utensils_list = ", ".join(utensils or [])
+    style_list = ", ".join(tags.get("style", []))
+    difficulty = tags.get("difficulte", "")
+    calories = tags.get("calories", "")
+    preferences = tags.get("preferences", "")
 
     prompt = f"""
 You are a recipe assistant. Given the following ingredients: {ing}.
-{dietary}
 
-The user has the following kitchen utensils available:
+Available kitchen utensils:
 {utensils_list}
 
-Return 3 creative recipe **titles** in **French** that use ONLY the ingredients provided and are compatible with the available utensils.
-DO NOT add any other ingredients. 
+Preferred cooking style(s): {style_list}
+Difficulty level: {difficulty}
+Caloric level: {calories}
+Dietary preferences: {preferences}
+
+Return 3 creative recipe **titles** in **French** that use ONLY the ingredients provided and are compatible with the utensils and tags. DO NOT add any other ingredients.
+Try to respect the cooking styles and dietary preferences as much as possible.
 Return the result as a JSON object like this:
 
 {{
@@ -36,12 +43,11 @@ If it's not possible to create any recipes, respond with:
     response = client.chat.complete(model=model_name, messages=messages, temperature=1.0)
     content = response.choices[0].message.content.strip()
 
-    # 💡 Nettoyage si réponse encodée comme ```json ... ```
+    # Nettoyage si réponse encodée comme ```json ... ```
     content = re.sub(r"^```json\s*|```$", "", content).strip()
 
     try:
         return json.loads(content)
     except json.JSONDecodeError:
-        # Pour le debug dans la console
         print("🧠 Réponse non-parsable détectée :", content)
         return {"error": "Invalid JSON format from model", "raw": content}

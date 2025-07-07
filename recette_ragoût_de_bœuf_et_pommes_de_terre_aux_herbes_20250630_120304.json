@@ -1,0 +1,69 @@
+{
+  "title": "Ragoût de bœuf et pommes de terre aux herbes",
+  "ingredients_input": [
+    {
+      "quantity": "300g",
+      "name": "bœuf"
+    },
+    {
+      "quantity": "2",
+      "name": "pommes de terre"
+    },
+    {
+      "quantity": "1",
+      "name": "poivron"
+    },
+    {
+      "quantity": "1",
+      "name": "ail"
+    },
+    {
+      "quantity": "1",
+      "name": "herbes"
+    },
+    {
+      "quantity": "huile",
+      "name": "d’olive"
+    }
+  ],
+  "generated_ingredients": {
+    "title": "Ragoût de bœuf et pommes de terre aux herbes",
+    "ingredients": [
+      "300g de bœuf",
+      "2 pommes de terre",
+      "1 poivron",
+      "1 gousse d'ail",
+      "1 herbes",
+      "huile d’olive"
+    ]
+  },
+  "steps": {
+    "title": "Ragoût de bœuf et pommes de terre aux herbes",
+    "steps": [
+      "Épluchez et coupez les pommes de terre en dés moyens sur la planche à découper à l'aide du couteau de chef.",
+      "Coupez le poivron en petits morceaux, retirez les graines et jetez-les.",
+      "Épluchez et hachez finement la gousse d'ail.",
+      "Coupez le bœuf en petits morceaux à l'aide du couteau de chef.",
+      "Chauffez un peu d'huile d’olive dans la cocotte en fonte à feu moyen.",
+      "Ajoutez les morceaux de bœuf dans la cocotte et faites-les dorer à l'aide de la cuillère en bois. Retirez les morceaux de bœuf et réservez.",
+      "Dans la même cocotte, ajoutez un peu plus d'huile d’olive si nécessaire et faites revenir l'ail haché et les poivrons coupés pendant quelques minutes.",
+      "Ajoutez les pommes de terre en dés et faites-les revenir pendant environ 5 minutes.",
+      "Remettez les morceaux de bœuf dans la cocotte et mélangez bien avec les pommes de terre et les poivrons.",
+      "Ajoutez les herbes et mélangez bien le tout.",
+      "Couvrez la cocotte avec un couvercle et laissez mijoter à feu doux pendant environ 30-40 minutes, ou jusqu'à ce que les pommes de terre soient tendres et que le bœuf soit bien cuit.",
+      "Retirez le couvercle et laissez mijoter encore quelques minutes si nécessaire pour réduire le liquide.",
+      "Goûtez et ajustez l'assaisonnement si nécessaire.",
+      "Servez chaud."
+    ],
+    "utensils_required": [
+      "planche à découper",
+      "couteau de chef",
+      "cuillère en bois",
+      "cocotte en fonte",
+      "couvercle"
+    ]
+  },
+  "tags": [
+    "argentin"
+  ]
+}

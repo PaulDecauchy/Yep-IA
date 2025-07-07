@@ -1,0 +1,46 @@
+{
+  "title": "Fraises Farine à la Poêle",
+  "ingredients_input": [
+    {
+      "quantity": "400g",
+      "name": "fraises"
+    },
+    {
+      "quantity": "1",
+      "name": "farine"
+    },
+    {
+      "quantity": "1",
+      "name": "chantilly"
+    }
+  ],
+  "generated_ingredients": {
+    "title": "Fraises Farine à la Poêle",
+    "ingredients": [
+      "400g de fraises",
+      "1 poignée de farine",
+      "1 chantilly"
+    ]
+  },
+  "steps": {
+    "title": "Fraises Farcie à la Poêle",
+    "steps": [
+      "Rincez les fraises sous l'eau froide et égouttez-les dans une passoire.",
+      "À l'aide d'un couteau de chef et d'une planche à découper, coupez les fraises en deux dans le sens de la longueur.",
+      "Placez une poêle à feu moyen sur la cuisinière.",
+      "Saupoudrez uniformément la farine dans la poêle chaude.",
+      "Ajoutez les fraises dans la poêle, côté coupé vers le bas.",
+      "À l'aide d'une spatule en silicone, faites cuire les fraises pendant environ 2 à 3 minutes, jusqu'à ce qu'elles commencent à ramollir et que la farine soit légèrement dorée.",
+      "Retournez délicatement les fraises à l'aide de la spatule en silicone et faites cuire pendant encore 2 à 3 minutes.",
+      "Retirez la poêle du feu et laissez refroidir légèrement.",
+      "Servez les fraises tièdes, garnies d'une cuillère de chantilly."
+    ],
+    "utensils_required": [
+      "colander",
+      "chef’s knife",
+      "cutting board",
+      "frying pan",
+      "silicone spatula"
+    ]
+  }
+}

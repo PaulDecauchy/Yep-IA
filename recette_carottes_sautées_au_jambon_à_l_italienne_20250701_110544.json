@@ -1,0 +1,48 @@
+{
+  "title": "Carottes sautées au jambon à l'italienne",
+  "ingredients_input": [
+    {
+      "quantity": "3",
+      "name": "carottes"
+    },
+    {
+      "quantity": "200g",
+      "name": "jambon"
+    }
+  ],
+  "generated_ingredients": {
+    "title": "Carottes sautées au jambon à l'italienne",
+    "ingredients": [
+      "3 carottes",
+      "200g jambon"
+    ]
+  },
+  "steps": {
+    "title": "Carottes sautées au jambon à l'italienne",
+    "steps": [
+      "Pelez les 3 carottes à l'aide de l'économe.",
+      "Coupez les carottes en fines rondelles à l'aide du couteau de chef et de la planche à découper.",
+      "Coupez le jambon en fines lamelles à l'aide du couteau de chef et de la planche à découper.",
+      "Placez la poêle à feu moyen.",
+      "Ajoutez les carottes dans la poêle et faites-les sauter pendant environ 5 minutes en remuant avec la spatule en silicone.",
+      "Ajoutez le jambon dans la poêle et faites sauter avec les carottes pendant encore 5 minutes en remuant avec la spatule en silicone.",
+      "Assurez-vous que les carottes sont tendres et légèrement dorées.",
+      "Retirez la poêle du feu et servez les carottes sautées au jambon à l'italienne."
+    ],
+    "utensils_required": [
+      "économe",
+      "couteau de chef",
+      "planche à découper",
+      "poêle",
+      "spatule en silicone"
+    ]
+  },
+  "tags": {
+    "style": [
+      "italien"
+    ],
+    "difficulte": "facile",
+    "calories": "léger",
+    "preferences": ""
+  }
+}

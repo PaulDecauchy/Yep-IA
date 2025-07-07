@@ -1,0 +1,60 @@
+{
+  "title": "Bowl de riz au saumon cru et avocat",
+  "ingredients_input": [
+    {
+      "quantity": "200g",
+      "name": "riz"
+    },
+    {
+      "quantity": "100g",
+      "name": "saumon cru"
+    },
+    {
+      "quantity": "1",
+      "name": "avocat"
+    },
+    {
+      "quantity": "sauce",
+      "name": "soja"
+    },
+    {
+      "quantity": "1",
+      "name": "feuille de nori"
+    }
+  ],
+  "generated_ingredients": {
+    "title": "Bowl de riz au saumon cru et avocat",
+    "ingredients": [
+      "200g de riz",
+      "100g de saumon cru",
+      "1 avocat",
+      "sauce soja",
+      "1 feuille de nori"
+    ]
+  },
+  "steps": {
+    "title": "Bowl de riz au saumon cru et avocat",
+    "steps": [
+      "Remplissez une casserole de taille moyenne avec de l'eau et portez à ébullition.",
+      "Ajoutez le riz dans l'eau bouillante et faites cuire selon les instructions sur l'emballage, généralement environ 10-15 minutes.",
+      "Pendant que le riz cuit, coupez l'avocat en deux, retirez le noyau et épluchez-le. Coupez l'avocat en tranches fines à l'aide d'un couteau de chef et d'une planche à découper.",
+      "Coupez le saumon cru en fines tranches à l'aide d'un couteau de chef et d'une planche à découper.",
+      "Coupez la feuille de nori en fines lamelles à l'aide de ciseaux de cuisine.",
+      "Une fois le riz cuit, égouttez-le dans une passoire et rincez-le à l'eau froide pour arrêter la cuisson et le refroidir.",
+      "Dans un bol, disposez le riz cuit comme base.",
+      "Ajoutez les tranches de saumon cru et d'avocat sur le riz.",
+      "Arrosez le tout avec un peu de sauce soja.",
+      "Parsemez de lamelles de nori sur le dessus."
+    ],
+    "utensils_required": [
+      "saucepan",
+      "chef’s knife",
+      "cutting board",
+      "colander",
+      "kitchen scissors"
+    ]
+  },
+  "tags": [
+    "japonais"
+  ]
+}

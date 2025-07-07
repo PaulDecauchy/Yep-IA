@@ -1,0 +1,39 @@
+{
+  "title": "Velouté de carottes au Thermomix accompagné de jambon",
+  "ingredients_input": [
+    {
+      "quantity": "3",
+      "name": "carottes"
+    },
+    {
+      "quantity": "200g",
+      "name": "jambon"
+    }
+  ],
+  "generated_ingredients": {
+    "title": "Velouté de carottes au Thermomix accompagné de jambon",
+    "ingredients": [
+      "3 carottes",
+      "200g jambon"
+    ]
+  },
+  "steps": {
+    "title": "Velouté de carottes au Thermomix accompagné de jambon",
+    "steps": [
+      "Pelez les 3 carottes à l'aide de l'économe et coupez-les en morceaux à l'aide du couteau de chef et de la planche à découper.",
+      "Placez les morceaux de carottes dans le Thermomix.",
+      "Mixez les carottes pendant 10 secondes à la vitesse 5.",
+      "Ajoutez 500g d'eau dans le Thermomix.",
+      "Faites cuire les carottes pendant 20 minutes à 100°C à la vitesse 1.",
+      "Pendant ce temps, coupez le jambon en petits morceaux à l'aide du couteau de chef et de la planche à découper.",
+      "Une fois les carottes cuites, mixez le velouté pendant 1 minute à la vitesse 7.",
+      "Servez le velouté de carottes chaud dans des bols et ajoutez les morceaux de jambon sur le dessus."
+    ],
+    "utensils_required": [
+      "Thermomix",
+      "couteau de chef",
+      "planche à découper",
+      "économe"
+    ]
+  }
+}

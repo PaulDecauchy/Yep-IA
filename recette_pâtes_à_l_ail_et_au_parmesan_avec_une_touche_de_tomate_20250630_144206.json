@@ -1,0 +1,69 @@
+{
+  "title": "Pâtes à l'ail et au parmesan avec une touche de tomate",
+  "ingredients_input": [
+    {
+      "quantity": "200g",
+      "name": "pâtes"
+    },
+    {
+      "quantity": "100g",
+      "name": "parmesan"
+    },
+    {
+      "quantity": "tomates",
+      "name": "pelées"
+    },
+    {
+      "quantity": "1",
+      "name": "basilic"
+    },
+    {
+      "quantity": "1",
+      "name": "ail"
+    }
+  ],
+  "generated_ingredients": {
+    "title": "Pâtes à l'ail et au parmesan avec une touche de tomate",
+    "ingredients": [
+      "200g de pâtes",
+      "100g de parmesan",
+      "2 tomates pelées",
+      "1 gousse d'ail",
+      "quelques feuilles de basilic"
+    ]
+  },
+  "steps": {
+    "title": "Pâtes à l'ail et au parmesan avec une touche de tomate",
+    "steps": [
+      "Remplissez le stockpot d'eau et portez à ébullition.",
+      "Pelez l'ail à l'aide du couteau de chef et hachez-le finement sur la planche à découper.",
+      "Coupez les tomates pelées en petits dés à l'aide du couteau de chef et de la planche à découper.",
+      "Ajoutez les pâtes dans le stockpot d'eau bouillante et faites cuire selon le temps indiqué sur l'emballage.",
+      "Pendant que les pâtes cuisent, faites chauffer la poêle à feu moyen.",
+      "Ajoutez l'ail haché dans la poêle et faites revenir pendant environ 1 minute en remuant avec la spatule en silicone.",
+      "Ajoutez les tomates pelées coupées en dés dans la poêle et faites cuire pendant environ 3 minutes en remuant avec la spatule en silicone.",
+      "Égouttez les pâtes à l'aide de la passoire et ajoutez-les dans la poêle avec les tomates et l'ail.",
+      "Râpez le parmesan à l'aide de la râpe et ajoutez-le dans la poêle avec les pâtes.",
+      "Mélangez bien le tout avec la spatule en silicone jusqu'à ce que le parmesan soit bien fondu et que les pâtes soient bien enrobées.",
+      "Lavez et coupez quelques feuilles de basilic et ajoutez-les aux pâtes.",
+      "Mélangez une dernière fois et servez chaud."
+    ],
+    "utensils_required": [
+      "stockpot",
+      "couteau de chef",
+      "planche à découper",
+      "poêle",
+      "spatule en silicone",
+      "passoire",
+      "râpe"
+    ]
+  },
+  "tags": {
+    "style": [
+      "italien"
+    ],
+    "difficulte": "facile",
+    "calories": "léger",
+    "preferences": ""
+  }
+}
