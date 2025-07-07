@@ -1,1 +1,76 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+ 
+# C extensions
+*.so
+ 
+# Virtual environment
+venv/
+env/
+.venv/
+.env/
+ 
+# PyInstaller
+*.manifest
+*.spec
+ 
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+ 
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+ 
+# FastAPI/Starlette debug tools
+debug.log
+ 
+# VS Code
+.vscode/
+ 
+# PyCharm
+.idea/
+*.iml
+ 
+# Jupyter Notebook
+.ipynb_checkpoints
+ 
+# dotenv files
 .env
+.env.*
+ 
+# Mypy / type checking
+.mypy_cache/
+.dmypy.json
+.pyre/
+ 
+# Pytest
+.pytest_cache/
+ 
+# System files
+.DS_Store
+Thumbs.db
+ 
+# SQLite DBs
+*.db
+*.sqlite3
+ 
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+ 
+# Local dev tools
+*.log
+*.local/
