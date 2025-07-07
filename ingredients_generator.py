@@ -38,4 +38,3 @@ Return the result in JSON format like this, and ONLY this:
     content = response.choices[0].message.content.strip()
 
     return extract_json_from_text(content)
-

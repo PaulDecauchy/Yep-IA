@@ -1,0 +1,55 @@
+{
+  "title": "Quiche sans croûte au jambon et carottes",
+  "ingredients_input": [
+    {
+      "quantity": "3",
+      "name": "carottes"
+    },
+    {
+      "quantity": "300g",
+      "name": "jambon"
+    },
+    {
+      "quantity": "1",
+      "name": "pates"
+    }
+  ],
+  "generated_ingredients": {
+    "title": "Quiche sans croûte au jambon et carottes",
+    "ingredients": [
+      "3 carottes",
+      "300g jambon",
+      "1 pâte"
+    ]
+  },
+  "steps": {
+    "title": "Quiche sans croûte au jambon et carottes",
+    "steps": [
+      "Préchauffez le four à 180°C.",
+      "Épluchez les carottes à l'aide d'un économe, puis râpez-les sur une planche à découper.",
+      "Coupez le jambon en petits morceaux à l'aide de ciseaux de cuisine.",
+      "Dans une poêle à feu moyen, faites revenir les carottes râpées pendant environ 5 minutes jusqu'à ce qu'elles soient tendres.",
+      "Pendant ce temps, faites cuire la pâte selon les instructions sur l'emballage, égouttez-la et mettez-la de côté.",
+      "Dans un grand bol, mélangez les carottes, le jambon et la pâte cuite à l'aide d'une cuillère en bois.",
+      "Versez le mélange dans un moule allant au four.",
+      "Enfournez pendant environ 25-30 minutes, ou jusqu'à ce que le dessus soit doré.",
+      "Laissez refroidir quelques minutes avant de servir."
+    ],
+    "utensils_required": [
+      "économe",
+      "planche à découper",
+      "ciseaux de cuisine",
+      "poêle",
+      "cuillère en bois",
+      "bol",
+      "moule allant au four",
+      "four"
+    ]
+  },
+  "tags": {
+    "style": [],
+    "difficulte": "",
+    "calories": "",
+    "preferences": ""
+  }
+}
