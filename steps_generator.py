@@ -1,6 +1,5 @@
 from mistralai import UserMessage, SystemMessage
 from kitchen_data import get_utensils_by_type
-from utils import extract_json_from_text
 
 def generate_steps_text(client, model_name, recipe_title, ingredients, utensil_type="traditional"):
     ingredients_str = "\n".join(f"- {item}" for item in ingredients)

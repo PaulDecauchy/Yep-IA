@@ -10,31 +10,28 @@ def generate_titles_text(client, model_name, ingredients, utensils=None, tags=No
     preferences = ", ".join(tags.get("preferences", []))
 
     prompt = f"""
-Tu es un assistant culinaire intelligent.
+Tu es un assistant culinaire.
 
-Ta tâche est de proposer entre 3 et 5 **titres de recettes en français**, en te basant sur :
+Génère entre 3 et 5 idées de recettes à partir des informations suivantes :
 
-- Les ingrédients disponibles : {ing}
-- Les ustensiles disponibles : {utensils_list if utensils_list else "aucun renseigné"}
-- Les styles culinaires préférés : {style_list if style_list else "non précisé"}
-- Les préférences alimentaires : {preferences if preferences else "aucune"}
-- Le niveau de difficulté souhaité : {difficulty if difficulty else "non précisé"}
-- Le niveau calorique souhaité : {calories if calories else "non précisé"}
+Ingrédients disponibles : {ing}
+Ustensiles disponibles : {utensils_list if utensils_list else "non précisé"}
+Style culinaire : {style_list if style_list else "non précisé"}
+Préférences alimentaires : {preferences if preferences else "aucune"}
+Niveau de difficulté : {difficulty if difficulty else "non précisé"}
+Niveau calorique : {calories if calories else "non précisé"}
 
-Contraintes :
-- N'utilise **que** les ingrédients disponibles.
-- Respecte autant que possible les préférences et styles donnés.
-- Ne rajoute **aucun autre ingrédient**.
-- Les recettes doivent pouvoir être réalisées avec les ustensiles listés.
+Pour chaque idée, indique :
+- Le titre de la recette
+- Le temps total estimé de préparation et de cuisson (en minutes)
 
-Réponds uniquement avec la liste des titres, numérotée, sans autre texte ni explication. Exemple :
+N’utilise que les ingrédients donnés. Ne propose pas d’autres aliments.
+Réponds uniquement avec une liste numérotée comme ceci :
 
-1. Soupe froide de tomates au basilic  
-2. Curry doux de lentilles corail au lait de coco  
-3. Poêlée de pommes de terre aux herbes
+1. Titre de la recette – 40 minutes  
+2. Autre titre – 25 minutes
 
-Si tu ne peux pas proposer de recettes valides, indique simplement :
-"Impossible de générer des titres avec les ingrédients fournis."
+Pas de commentaire, pas de texte additionnel.
 """.strip()
 
     messages = [

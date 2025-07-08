@@ -14,9 +14,10 @@ class Tags(BaseModel):
     difficulte: Optional[str] = None
     calories: Optional[str] = None
     preferences: Optional[List[str]] = []
+    allergies: Optional[List[str]] = []
 
 class RecipeChainPrompt(BaseModel):
-    title: str
+    title: Optional[str] = None
     ingredients: List[Ingredient]
     utensils: Optional[List[str]] = []
     tags: Optional[Tags] = None
