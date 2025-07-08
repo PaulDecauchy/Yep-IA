@@ -2,39 +2,43 @@ from mistralai import UserMessage, SystemMessage
 from kitchen_data import get_utensils_by_type
 from utils import extract_json_from_text
 
-def generate_steps(client, model_name, recipe_title, ingredients, utensil_type="traditional"):
+def generate_steps_text(client, model_name, recipe_title, ingredients, utensil_type="traditional"):
     ingredients_str = "\n".join(f"- {item}" for item in ingredients)
     utensils = get_utensils_by_type(utensil_type)
     utensils_text = ", ".join(utensils)
 
     prompt = f"""
-You are a French cooking assistant.
+Tu es un assistant culinaire français.
 
-Generate clear cooking steps for the recipe titled "{recipe_title}" using ONLY the following ingredients:
+Ta mission est de générer les **étapes de préparation** de la recette suivante :  
+**{recipe_title}**
+
+Ingrédients à utiliser :  
 {ingredients_str}
 
-The available utensils are:
-{utensils_text}
+Ustensiles disponibles : {utensils_text}
 
-Do not use or mention any ingredients or utensils not listed.
+Contraintes :  
+- Utilise uniquement les ingrédients et ustensiles fournis.  
+- Décris les étapes **clairement, en français**, dans l’ordre chronologique.  
+- Réponds uniquement avec les étapes, numérotées.  
+- Ne donne **aucune explication supplémentaire**, ni résumé, ni JSON.
 
-Return the result in JSON format ONLY like this:
+🧾 Exemple de format attendu :
 
-```json
-{{
-  "title": "{recipe_title}",
-  "steps": ["\u00e9tape 1", "\u00e9tape 2", "..."],
-  "utensils_required": ["..."]
-}}
-```
-"""
+1. Épluchez et émincez l’oignon.  
+2. Faites-le revenir dans une casserole avec un peu d’huile d’olive.  
+3. Ajoutez les lentilles corail et le lait de coco, puis laissez mijoter...
+
+À toi de jouer !
+""".strip()
 
     messages = [
-        SystemMessage(content="You generate JSON outputs for recipe steps."),
+        SystemMessage(content="Tu es un assistant IA qui rédige les étapes d’une recette de cuisine en français."),
         UserMessage(content=prompt)
     ]
 
     response = client.chat.complete(model=model_name, messages=messages, temperature=0.7)
     content = response.choices[0].message.content.strip()
 
-    return extract_json_from_text(content)
+    return content
