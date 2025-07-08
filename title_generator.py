@@ -1,53 +1,49 @@
-import json
-import re
-from mistralai import UserMessage, SystemMessage
+from mistralai import SystemMessage, UserMessage
 
-def generate_titles_json(client, model_name, ingredients, utensils=None, tags=None):
+
+def generate_titles_text(client, model_name, ingredients, utensils=None, tags=None):
     ing = ", ".join(ingredients)
     utensils_list = ", ".join(utensils or [])
     style_list = ", ".join(tags.get("style", []))
     difficulty = tags.get("difficulte", "")
     calories = tags.get("calories", "")
-    preferences = tags.get("preferences", "")
+    preferences = ", ".join(tags.get("preferences", []))
 
     prompt = f"""
-You are a recipe assistant. Given the following ingredients: {ing}.
+Tu es un assistant culinaire intelligent.
 
-Available kitchen utensils:
-{utensils_list}
+Ta tâche est de proposer entre 3 et 5 **titres de recettes en français**, en te basant sur :
 
-Preferred cooking style(s): {style_list}
-Difficulty level: {difficulty}
-Caloric level: {calories}
-Dietary preferences: {preferences}
+- Les ingrédients disponibles : {ing}
+- Les ustensiles disponibles : {utensils_list if utensils_list else "aucun renseigné"}
+- Les styles culinaires préférés : {style_list if style_list else "non précisé"}
+- Les préférences alimentaires : {preferences if preferences else "aucune"}
+- Le niveau de difficulté souhaité : {difficulty if difficulty else "non précisé"}
+- Le niveau calorique souhaité : {calories if calories else "non précisé"}
 
-Return 3 creative recipe **titles** in **French** that use ONLY the ingredients provided and are compatible with the utensils and tags. DO NOT add any other ingredients.
-Try to respect the cooking styles and dietary preferences as much as possible.
-Return the result as a JSON object like this:
+Contraintes :
+- N'utilise **que** les ingrédients disponibles.
+- Respecte autant que possible les préférences et styles donnés.
+- Ne rajoute **aucun autre ingrédient**.
+- Les recettes doivent pouvoir être réalisées avec les ustensiles listés.
 
-{{
-  "titles": ["title1", "title2", "title3"]
-}}
+Réponds uniquement avec la liste des titres, numérotée, sans autre texte ni explication. Exemple :
 
-If it's not possible to create any recipes, respond with:
-{{
-  "error": "Not enough ingredients to generate recipe titles."
-}}
-"""
+1. Soupe froide de tomates au basilic  
+2. Curry doux de lentilles corail au lait de coco  
+3. Poêlée de pommes de terre aux herbes
+
+Si tu ne peux pas proposer de recettes valides, indique simplement :
+"Impossible de générer des titres avec les ingrédients fournis."
+""".strip()
 
     messages = [
-        SystemMessage(content="You generate JSON outputs for a cooking app."),
-        UserMessage(content=prompt.strip())
+        SystemMessage(content="Tu es un assistant IA qui génère des idées de recettes."),
+        UserMessage(content=prompt)
     ]
 
     response = client.chat.complete(model=model_name, messages=messages, temperature=1.0)
     content = response.choices[0].message.content.strip()
 
-    # Nettoyage si réponse encodée comme ```json ... ```
-    content = re.sub(r"^```json\s*|```$", "", content).strip()
-
-    try:
-        return json.loads(content)
-    except json.JSONDecodeError:
-        print("🧠 Réponse non-parsable détectée :", content)
-        return {"error": "Invalid JSON format from model", "raw": content}
+    # Plus de parsing JSON ici
+    return content

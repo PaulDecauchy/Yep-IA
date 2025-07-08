@@ -2,39 +2,42 @@ from mistralai import UserMessage, SystemMessage
 from kitchen_data import get_utensils_by_type
 from utils import extract_json_from_text
 
-def generate_ingredients(client, model_name, recipe_title, ingredients, utensil_type="traditional"):
-    ingredients_str = "\n".join(f"- {item}" for item in ingredients)
+def generate_ingredients_text(client, model_name, recipe_title, available_ingredients, utensil_type="traditional"):
+    ingredients_str = "\n".join(f"- {item}" for item in available_ingredients)
     utensils = get_utensils_by_type(utensil_type)
     utensils_text = ", ".join(utensils)
 
     prompt = f"""
-You are a French cooking assistant.
+Tu es un assistant culinaire français.
 
-Generate the list of ingredients (with quantities) for the recipe titled "{recipe_title}".
-The user has the following ingredients:
+Ta tâche est de proposer la **liste complète des ingrédients nécessaires** pour réaliser la recette suivante :  
+**{recipe_title}**
+
+Contraintes :
+- Ingrédients disponibles :
 {ingredients_str}
 
-The available utensils are:
-{utensils_text}
+- Ustensiles disponibles : {utensils_text}
+- N’utilise **que** les ingrédients fournis.
+- Donne les **quantités précises** et les **unités** (g, ml, cl, pièce, etc.)
 
-⚠️ Use ONLY the ingredients listed above. Do not add any extra ingredients.
+🧾 Réponds uniquement avec la liste des ingrédients au format suivant (exemple) :
 
-Return the result in JSON format like this, and ONLY this:
+- 250 g de farine  
+- 500 ml de lait  
+- 2 œufs  
+- 1 pincée de sel
 
-```json
-{{
-  "title": "{recipe_title}",
-  "ingredients": ["item1", "item2", "..."]
-}}
-```
-"""
+Ne donne **aucune explication** ni JSON. Juste la liste.
+""".strip()
 
     messages = [
-        SystemMessage(content="You generate JSON outputs for ingredients."),
+        SystemMessage(content="Tu es un assistant IA qui génère des listes d'ingrédients de cuisine en français."),
         UserMessage(content=prompt)
     ]
 
     response = client.chat.complete(model=model_name, messages=messages, temperature=0.7)
     content = response.choices[0].message.content.strip()
 
-    return extract_json_from_text(content)
+    return content
+

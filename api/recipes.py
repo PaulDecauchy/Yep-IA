@@ -1,176 +1,121 @@
 from fastapi import APIRouter
+from ingredients_generator import generate_ingredients_text
 from models.schemas import Prompt, RecipeChainPrompt, TitleSelected
 from fastapi import APIRouter
 from models.schemas import Prompt, RecipeChainPrompt
-from services.mistral_service import ask_mistral, ask_mistral_json
-from title_generator import generate_titles_json
+from services.mistral_service import ask_mistral
+from title_generator import generate_titles_text
 from services.mistral_service import client, model_name
 
 router = APIRouter(prefix="/recipes", tags=["recipes"])
-
 @router.post("/titles")
-def generate_titles(prompt: Prompt):
-    preferences = prompt.tags.get("preferences", [])
-    styles = prompt.tags.get("style", [])
+def generate_titles(prompt: RecipeChainPrompt):
+    preferences = prompt.tags.preferences if prompt.tags else []
+    styles = prompt.tags.style if prompt.tags else []
 
-    prompt_text = f"""
-Tu es un assistant culinaire.
+    ingredients = [ingredient.name for ingredient in prompt.ingredients]
+    utensils = prompt.utensils or []
+    tags = {
+        "style": styles,
+        "preferences": preferences,
+        "difficulte": prompt.tags.difficulte if prompt.tags else "",
+        "calories": prompt.tags.calories if prompt.tags else ""
+    }
 
-Génère 5 idées de titres de recettes en respectant les critères suivants :
+    titles_text = generate_titles_text(client, "mistral-medium", ingredients, utensils, tags)
 
-- Préférences alimentaires : {", ".join(preferences)}
-- Style culinaire : {", ".join(styles)}
-
-Répond uniquement avec un JSON au format suivant :
-
-{{
-  "titles": ["Titre 1", "Titre 2", "Titre 3", "Titre 4", "Titre 5"]
-}}
-
-Aucune explication, juste le JSON.
-""".strip()
-
-    titles = ask_mistral_json(prompt_text)
-    return titles
+    return {"result": titles_text}
 
 @router.post("/ingredients")
 def generate_ingredients(data: TitleSelected):
-    preferences = data.tags.get("preferences", [])
-    styles = data.tags.get("style", [])
+    # Tu dois décider comment tu veux récupérer les préférences/styles → soit tu les ajoutes dans TitleSelected, soit tu les ignores ici
+    # Voici une version simple sans préférences
+    recipe_title = data.title
+    # simulate list of available ingredients (à remplacer selon ton cas réel)
+    available_ingredients = ["pommes de terre", "lentilles corail", "oignons", "lait de coco", "ail", "huile d'olive"]
+    
+    # On utilise un type d’ustensiles générique pour l’instant
+    ingredient_text = generate_ingredients_text(client, "mistral-medium", recipe_title, available_ingredients)
 
-    prompt = f"""
-Recette : {data.title}
-Préférences : {", ".join(preferences)}
-Style culinaire : {", ".join(styles)}
-
-Donne uniquement un JSON valide sous cette forme :
-
-{{
-  "ingredients": [
-    {{"name": "farine", "quantity": 250, "unit": "g"}},
-    {{"name": "lait", "quantity": 500, "unit": "ml"}},
-    {{"name": "œufs", "quantity": 2, "unit": "pièce"}}
-  ]
-}}
-
-- name : nom en français
-- quantity : nombre (utilise . pour les décimales)
-- unit : g, ml, cl, l, kg, pièce, pincée, cuillère...
-
-Pas d’explication. Juste le JSON.
-""".strip()
-
-    print("🧪 Prompt ingrédients :", prompt)
-    ingredients = ask_mistral_json(prompt)
-    print("🧾 Réponse ingrédients :", ingredients)
-
-    if not ingredients or "ingredients" not in ingredients:
-        return {"error": "Erreur lors de la génération des ingrédients", "raw": ingredients}
-
-    return ingredients
+    return {"result": ingredient_text}
 
 @router.post("/steps")
 def generate_steps(prompt: Prompt):
-    preferences = prompt.tags.get("preferences", [])
-    styles = prompt.tags.get("style", [])
+    preferences = prompt.tags.get("preferences", []) if hasattr(prompt, "tags") else []
+    styles = prompt.tags.get("style", []) if hasattr(prompt, "tags") else []
 
     steps_prompt = f"""
-Tu es un chef spécialisé dans les recettes {", ".join(preferences)} de style {", ".join(styles)}.
+Tu es un chef cuisinier spécialisé dans les recettes {", ".join(preferences) or "traditionnelles"} de style {", ".join(styles) or "français"}.
 
-Décris les étapes de la recette ci-dessous en JSON :
+Ta tâche est de décrire clairement les **étapes de préparation** de cette recette :  
+"{prompt.message}"
 
-Message utilisateur :
-{prompt.message}
+Contraintes :
+- Ne propose **aucun ingrédient ou ustensile** non mentionné dans la recette.
+- Rédige des étapes simples, concises, numérotées, en **français**.
+- Ne donne **aucune explication supplémentaire**, résumé ou introduction.
 
-Format attendu :
+🧾 Exemple de format attendu :
 
-{{
-  "steps": [
-    "étape 1",
-    "étape 2"
-  ]
-}}
-
-Aucune explication. Juste le JSON.
+1. Épluchez les légumes.  
+2. Faites-les revenir dans une casserole.  
+3. Ajoutez les épices et laissez mijoter.
 """.strip()
 
-    return ask_mistral_json(steps_prompt)
+    result = ask_mistral(steps_prompt)
+    return {"result": result}
 
 @router.post("/chain")
 def generate_full_recipe(prompt: RecipeChainPrompt):
     chosen_title = prompt.title
-    print("🔗 Étape 1 - Titre choisi :", chosen_title)
 
-    # Extraction des tags
     preferences = prompt.tags.preferences if prompt.tags and prompt.tags.preferences else []
     styles = prompt.tags.style if prompt.tags and prompt.tags.style else []
+    available_ingredients = [f"{ing.quantity} {ing.unit} {ing.name}" for ing in prompt.ingredients]
+    ingredient_names = [ing.name for ing in prompt.ingredients]
+    utensils = prompt.utensils or []
+    utensil_text = ", ".join(utensils)
 
-    # Étape 2 : Génération des ingrédients
+    # Génération des ingrédients
     ingredients_prompt = f"""
-Recette : {chosen_title}
-Style culinaire : {', '.join(styles)}
-Préférences alimentaires : {', '.join(preferences)}
+Titre : {chosen_title}
+Préférences : {", ".join(preferences) or "aucune"}
+Style : {", ".join(styles) or "non précisé"}
+Ingrédients disponibles :
+{chr(10).join(f"- {ing}" for ing in ingredient_names)}
+Ustensiles disponibles : {utensil_text or "non précisé"}
 
-Donne uniquement un JSON valide sous cette forme :
-
-{{
-  "ingredients": [
-    {{"name": "farine", "quantity": 250, "unit": "g"}},
-    {{"name": "lait", "quantity": 500, "unit": "ml"}},
-    {{"name": "œufs", "quantity": 2, "unit": "pièce"}}
-  ]
-}}
-
-- name : nom en français
-- quantity : nombre (utilise . pour les décimales)
-- unit : g, ml, cl, l, kg, pièce, pincée, cuillère...
-
-Aucune explication. Juste le JSON.
+Donne la liste des ingrédients nécessaires avec leurs quantités. Utilise uniquement les ingrédients disponibles. Format clair, pas de liste JSON, pas d'explication.
 """.strip()
 
-    print("🧪 Prompt ingrédients :", ingredients_prompt)
-    ingredients_data = ask_mistral_json(ingredients_prompt)
-    print("🧾 Réponse ingrédients :", ingredients_data)
+    ingredients_text = ask_mistral(ingredients_prompt)
 
-    if not ingredients_data or "ingredients" not in ingredients_data:
-        return {"error": "Erreur lors de la génération des ingrédients", "raw": ingredients_data}
-
-    ingredients_text = ", ".join([
-        f"{item['quantity']} {item['unit']} {item['name']}"
-        for item in ingredients_data["ingredients"]
-    ])
-
-    # Étape 3 : Génération des étapes
+    # Génération des étapes
     steps_prompt = f"""
-Titre de la recette : {chosen_title}
-Ingrédients : {ingredients_text}
+Titre : {chosen_title}
+Ingrédients à utiliser :
+{ingredients_text}
 
-Décris les étapes de la recette, en JSON comme ceci :
+Ustensiles disponibles : {utensil_text or "non précisé"}
 
-{{
-  "steps": [
-    "étape 1",
-    "étape 2"
-  ]
-}}
-
-Aucune explication. Juste le JSON.
+Décris les étapes de la recette. Format : liste numérotée, phrases courtes et précises. Pas d'introduction, pas de résumé.
 """.strip()
 
-    print("🧪 Prompt étapes :", steps_prompt)
-    steps_data = ask_mistral_json(steps_prompt)
-    print("🧾 Réponse étapes :", steps_data)
+    steps_text = ask_mistral(steps_prompt)
 
-    if not steps_data or "steps" not in steps_data:
-        return {"error": "Erreur lors de la génération des étapes", "raw": steps_data}
+    # Format final
+    full_text = f"""
+Titre : {chosen_title}
 
-    # Résultat final
-    return {
-        "title": chosen_title,
-        "ingredients": ingredients_data["ingredients"],
-        "steps": steps_data["steps"],
-        "tags": {
-            "style_culinaire": styles,
-            "preferences_alimentaires": preferences
-        }
-    }
+Préférences : {", ".join(preferences) or "aucune"}
+Style : {", ".join(styles) or "non précisé"}
+Ustensiles : {utensil_text or "non précisé"}
+
+Ingrédients :
+{ingredients_text.strip()}
+
+Étapes :
+{steps_text.strip()}
+""".strip()
+
+    return {"result": full_text}
