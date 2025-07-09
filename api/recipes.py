@@ -76,3 +76,4 @@ Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativem
 
     response = ask_mistral(messages)
     return {"result": response}
+
