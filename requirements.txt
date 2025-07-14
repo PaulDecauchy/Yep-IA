@@ -31,6 +31,15 @@ typer==0.16.0
 typing-inspection==0.4.1
 typing_extensions==4.14.0
 uvicorn==0.34.3
-uvloop==0.21.0
 watchfiles==1.1.0
 websockets==15.0.1
+
+mistralai~=1.9.1
+pip~=25.1.1
+typing_extensions~=4.14.0
+email_validator~=2.2.0
+pydantic_core~=2.33.2
+orjson~=3.10.18
+six~=1.17.0
+python-dateutil~=2.9.0.post0
+eval_type_backport~=0.2.2
