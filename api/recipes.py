@@ -1,9 +1,8 @@
 from fastapi import APIRouter
 from fastapi.params import Body
+from typing import List
 from models.schemas import RecipeChainPrompt
 from services.mistral_service import ask_mistral
-from mistralai import UserMessage, SystemMessage
-
 from services.parsing_recipe import parse_recipe
 
 router = APIRouter(prefix="/recipes", tags=["recipes"])
@@ -13,19 +12,26 @@ def parse_recipe_endpoint(result: str = Body(..., embed=True)):
     return parse_recipe(result)
 
 @router.post("/generate")
-def generate_recipe(prompt: RecipeChainPrompt):
-    # Contraintes permanentes
+def generate_recipe(
+    prompt: RecipeChainPrompt,
+    excluded_titles: List[str] = Body(default=[])
+):
     preferences = prompt.tags.preferences if prompt.tags else []
     allergies = prompt.tags.allergies if prompt.tags and hasattr(prompt.tags, "allergies") else []
     styles = prompt.tags.style if prompt.tags else []
     utensils = prompt.utensils or []
 
-    # Ingrédients disponibles
     ingredient_names = [i.name for i in prompt.ingredients]
     ingredients_str = "\n".join(f"- {i}" for i in ingredient_names)
     utensils_str = ", ".join(utensils) if utensils else "non précisé"
 
-    # Prompt 1 : contexte système
+    excluded_str = ""
+    if excluded_titles:
+        excluded_str = (
+            "\nAttention : tu ne dois en aucun cas générer une recette avec un titre ou un thème proche de ceux-ci : "
+            + ", ".join(f'"{title}"' for title in excluded_titles) + "."
+        )
+
     context_message = f"""
 Tu es un assistant culinaire.
 
@@ -38,11 +44,10 @@ Voici les contraintes permanentes à respecter pour chaque recette :
 - Tags culinaires : {", ".join(styles) if styles else "aucun"}
 
 Tu dois toujours respecter ces contraintes.
+{excluded_str}
 """.strip()
 
-    # Prompt 2 : génération de recette
     user_prompt = f"""
-
 Voici les ingrédients disponibles :
 {ingredients_str}
 
@@ -68,12 +73,11 @@ Ingrédients :
 Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativement la structure. Aucun encadré, aucun JSON.
 """.strip()
 
-    # Envoi à Mistral
+    # ✅ messages au format dict pour `ask_mistral`
     messages = [
-        SystemMessage(content=context_message),
-        UserMessage(content=user_prompt)
+        {"role": "system", "content": context_message},
+        {"role": "user", "content": user_prompt}
     ]
 
     response = ask_mistral(messages)
     return {"result": response}
-

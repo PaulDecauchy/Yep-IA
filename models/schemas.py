@@ -21,6 +21,7 @@ class RecipeChainPrompt(BaseModel):
     ingredients: List[Ingredient]
     utensils: Optional[List[str]] = []
     tags: Optional[Tags] = None
+    excluded_titles: Optional[List[str]] = []
 
 class TitleSelected(BaseModel):
     title: str
