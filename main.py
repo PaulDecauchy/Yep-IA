@@ -2,12 +2,14 @@ from typing import Union
 from fastapi import FastAPI
 from api import recipes  # ← importe ton router (chemin selon ton projet)
 from api.recipes import router as recipe_router
+from api.recipes_batch import router as recipe_batch_router
 
 
 app = FastAPI()
 
-app.include_router(recipes.router, prefix="/recipes")  # ← ajoute ton router
 app.include_router(recipe_router)
+app.include_router(recipe_batch_router)
+
 
 
 @app.get("/")
