@@ -22,6 +22,12 @@ def generate_multiple_recipes(
     provided_ingredients = {i.name.lower() for i in prompt.ingredients}
     used_ingredients = set()
 
+    # 🔁 Extraction des nouveaux champs
+    diets = prompt.tags.diet if prompt.tags else []
+    tags = prompt.tags.tag if prompt.tags else []
+    allergies = prompt.tags.allergies if prompt.tags else []
+    utensils_str = ", ".join(prompt.utensils) if prompt.utensils else "non précisé"
+
     while len(recipes) < max_recipes and retries < max_retries:
         excluded_str = ""
         if unique_titles:
@@ -35,11 +41,11 @@ Tu es un assistant culinaire.
 
 Voici les contraintes permanentes à respecter pour chaque recette :
 
-- Ustensiles disponibles : {', '.join(prompt.utensils) if prompt.utensils else 'non précisé'}
+- Ustensiles disponibles : {utensils_str}
 - Préférences alimentaires :
-  - Allergies/intolérances : {', '.join(prompt.tags.allergies) if prompt.tags and prompt.tags.allergies else 'aucune'}
-  - Régime : {', '.join(prompt.tags.preferences) if prompt.tags and prompt.tags.preferences else 'aucun'}
-- Tags culinaires : {', '.join(prompt.tags.style) if prompt.tags and prompt.tags.style else 'aucun'}
+  - Régimes : {", ".join(diets) if diets else "aucun"}
+  - Allergies : {", ".join(allergies) if allergies else "aucune"}
+- Tags culinaires : {", ".join(tags) if tags else "aucun"}
 
 Tu dois toujours respecter ces contraintes.
 {excluded_str}
@@ -60,7 +66,8 @@ La réponse doit être structurée **exactement** ainsi :
 Titre :  
 Préparation : XX minutes  
 Cuisson totale : XX minutes  
-Tags : tag1, tag2, tag3  
+Diet : [ex. végétarien, pauvre en glucides]  
+Tags : [ex. street food, indien]
 
 Ingrédients :  
 - [nom] : [quantité] [unité]  
@@ -110,3 +117,4 @@ Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativem
         "recipes": recipes,
         "unused_ingredients": unused_ingredients
     }
+

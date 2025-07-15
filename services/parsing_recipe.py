@@ -65,8 +65,8 @@ def parse_recipe(text: str) -> dict:
 
     return {
         "title": title,
-        "preparation_time": prep_time,
-        "total_cooking_time": cook_time,
+        "preparationTime": prep_time,
+        "totalCookingTime": cook_time,
         "tags": tags,
         "ingredients": ingredients,
         "steps": steps
