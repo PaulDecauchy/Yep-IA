@@ -9,23 +9,21 @@ class Ingredient(BaseModel):
     quantity: float
     unit: str
 
-class Tags(BaseModel):
-    style: Optional[List[str]] = []
-    difficulte: Optional[str] = None
-    calories: Optional[str] = None
-    preferences: Optional[List[str]] = []
+class Preferences(BaseModel):
+    diet: Optional[List[str]] = []
+    tag: Optional[List[str]] = []
     allergies: Optional[List[str]] = []
 
 class RecipeChainPrompt(BaseModel):
     title: Optional[str] = None
     ingredients: List[Ingredient]
     utensils: Optional[List[str]] = []
-    tags: Optional[Tags] = None
+    tags: Optional[Preferences] = None
 
 class RecipeWithoutChainPrompt(BaseModel):
     title: Optional[str] = None
     utensils: Optional[List[str]] = []
-    tags: Optional[Tags] = None
+    tags: Optional[Preferences] = None
 
 
 class TitleSelected(BaseModel):

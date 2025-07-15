@@ -19,6 +19,12 @@ def generate_multiple_recipes_without_ingredients(
     max_recipes = 4
     max_retries = 10
 
+    # ✅ Extraction des nouveaux champs
+    diets = prompt.tags.diet if prompt.tags else []
+    tags = prompt.tags.tag if prompt.tags else []
+    allergies = prompt.tags.allergies if prompt.tags else []
+    utensils_str = ", ".join(prompt.utensils) if prompt.utensils else "non précisé"
+
     while len(recipes) < max_recipes and retries < max_retries:
         excluded_str = ""
         if unique_titles:
@@ -32,18 +38,17 @@ Tu es un assistant culinaire.
 
 Voici les contraintes permanentes à respecter pour chaque recette :
 
-- Ustensiles disponibles : {', '.join(prompt.utensils) if prompt.utensils else 'non précisé'}
+- Ustensiles disponibles : {utensils_str}
 - Préférences alimentaires :
-  - Allergies/intolérances : {', '.join(prompt.tags.allergies) if prompt.tags and prompt.tags.allergies else 'aucune'}
-  - Régime : {', '.join(prompt.tags.preferences) if prompt.tags and prompt.tags.preferences else 'aucun'}
-- Tags culinaires : {', '.join(prompt.tags.style) if prompt.tags and prompt.tags.style else 'aucun'}
+  - Régimes : {", ".join(diets) if diets else "aucun"}
+  - Allergies : {", ".join(allergies) if allergies else "aucune"}
+- Tags culinaires : {", ".join(tags) if tags else "aucun"}
 
 Tu dois toujours respecter ces contraintes.
 {excluded_str}
 """.strip()
 
         user_prompt = f"""
-
 Génère une recette complète et réaliste en respectant toutes les contraintes, avec une **structure stricte**.
 
 Tu dois inclure **un titre généré** au début de la réponse qui ne peut pas être "sans titre".
@@ -53,7 +58,8 @@ La réponse doit être structurée **exactement** ainsi :
 Titre :  
 Préparation : XX minutes  
 Cuisson totale : XX minutes  
-Tags : tag1, tag2, tag3  
+Diet : [ex. végétarien, pauvre en glucides]  
+Tags : [ex. street food, indien]
 
 Ingrédients :  
 - [nom] : [quantité] [unité]  
@@ -63,7 +69,7 @@ Ingrédients :
 1. ...  
 2. ...
 
-Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativement la structure. Aucun encadré, aucun JSON.
+Utilise uniquement les ustensiles fournis. Respecte impérativement la structure. Aucun encadré, aucun JSON.
 """.strip()
 
         messages = [
@@ -89,14 +95,10 @@ Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativem
             unique_titles.add(title)
             recipes.append(parsed)
 
-            for ing in parsed["ingredients"]:
-                used_ingredients.add(ing["name"].lower())
-
         except Exception as e:
             retries += 1
             time.sleep(1.2)
             continue
-
 
     return {
         "recipes": recipes,

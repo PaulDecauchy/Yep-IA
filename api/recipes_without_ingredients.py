@@ -16,9 +16,10 @@ def generate_recipe_without_ingredients(
     prompt: RecipeWithoutChainPrompt,
     excluded_titles: List[str] = Body(default=[])
 ):
-    preferences = prompt.tags.preferences if prompt.tags else []
-    allergies = prompt.tags.allergies if prompt.tags and hasattr(prompt.tags, "allergies") else []
-    styles = prompt.tags.style if prompt.tags else []
+    # ✅ Nouveau mapping des préférences
+    diets = prompt.tags.diet if prompt.tags else []
+    tags = prompt.tags.tag if prompt.tags else []
+    allergies = prompt.tags.allergies if prompt.tags else []
     utensils = prompt.utensils or []
     utensils_str = ", ".join(utensils) if utensils else "non précisé"
 
@@ -36,16 +37,15 @@ Voici les contraintes permanentes à respecter pour chaque recette :
 
 - Ustensiles disponibles : {utensils_str}
 - Préférences alimentaires :
-  - Allergies/intolérances : {", ".join(allergies) if allergies else "aucune"}
-  - Régime : {", ".join(preferences) if preferences else "aucun"}
-- Tags culinaires : {", ".join(styles) if styles else "aucun"}
+  - Régimes : {", ".join(diets) if diets else "aucun"}
+  - Allergies : {", ".join(allergies) if allergies else "aucune"}
+- Tags culinaires : {", ".join(tags) if tags else "aucun"}
 
 Tu dois toujours respecter ces contraintes.
 {excluded_str}
 """.strip()
 
     user_prompt = f"""
-
 Génère une recette complète et réaliste en respectant toutes les contraintes, avec une **structure stricte**.
 
 Tu dois inclure **un titre généré** au début de la réponse qui ne peut pas être **sans titre**.
@@ -55,7 +55,8 @@ La réponse doit être structurée **exactement** ainsi :
 Titre :  
 Préparation : XX minutes  
 Cuisson totale : XX minutes  
-Tags : tag1, tag2, tag3  
+Diet : [ex. végétarien, pauvre en glucides]  
+Tags : [ex. street food, indien]
 
 Ingrédients :  
 - [nom] : [quantité] [unité]  
@@ -82,3 +83,4 @@ Utilise uniquement les ustensiles fournis. Respecte impérativement la structure
     return {
         "recipe": parsed,
     }
+
