@@ -73,7 +73,6 @@ Ingrédients :
 Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativement la structure. Aucun encadré, aucun JSON.
 """.strip()
 
-        # ✅ format dict compatible avec ask_mistral()
         messages = [
             {"role": "system", "content": context_message},
             {"role": "user", "content": user_prompt}
@@ -105,8 +104,9 @@ Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativem
             time.sleep(1.2)
             continue
 
-    unused_ingredients = provided_ingredients - used_ingredients
-    if unused_ingredients:
-        print(f"⚠️ Ingrédients non utilisés : {unused_ingredients}")
+    unused_ingredients = list(provided_ingredients - used_ingredients)
 
-    return {"recipes": recipes}
+    return {
+        "recipes": recipes,
+        "unused_ingredients": unused_ingredients
+    }
