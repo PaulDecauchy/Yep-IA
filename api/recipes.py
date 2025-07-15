@@ -73,11 +73,23 @@ Ingrédients :
 Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativement la structure. Aucun encadré, aucun JSON.
 """.strip()
 
-    # ✅ messages au format dict pour `ask_mistral`
     messages = [
         {"role": "system", "content": context_message},
         {"role": "user", "content": user_prompt}
     ]
 
-    response = ask_mistral(messages)
-    return {"result": response}
+    raw_response = ask_mistral(messages)
+    parsed = parse_recipe(raw_response)
+
+    # Ajoute sécurité : si parsing vide → on l'indique clairement
+    parsed_ingredients = parsed.get("ingredients", [])
+    parsed_steps = parsed.get("steps", [])
+
+    provided_ingredients = {i.name.lower() for i in prompt.ingredients}
+    used_ingredients = {i["name"].lower() for i in parsed_ingredients} if parsed_ingredients else set()
+    unused_ingredients = list(provided_ingredients - used_ingredients)
+
+    return {
+        "recipe": parsed,
+        "unused_ingredients": unused_ingredients,
+    }
