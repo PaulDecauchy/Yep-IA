@@ -1,12 +1,16 @@
 import re
 
+def clean_title(title: str) -> str:
+    # Supprime les caractères indésirables (*, guillemets, etc.)
+    return re.sub(r"[^\w\sàâäéèêëîïôöùûüç'’\-]", "", title).strip()
+
 def parse_ingredients(ingredient_lines):
     ingredients = []
     for line in ingredient_lines:
         line = line.lstrip("- ").strip()
 
         # Format attendu : "nom : quantité unité"
-        match = re.match(r"(?P<name>.+?)\s*:\s*(?P<quantity>[\d.,]+)?\s*(?P<unit>.+)?", line)
+        match = re.match(r"(?P<name>.+?)\s*:\s*(?P<quantity>[\d.,]+)?\s*(?P<unit>[^\d]*)?", line)
 
         if match:
             name = match.group("name").strip()
@@ -15,7 +19,7 @@ def parse_ingredients(ingredient_lines):
 
             try:
                 quantity = float(quantity_str.replace(",", ".")) if quantity_str else None
-            except:
+            except ValueError:
                 quantity = None
         else:
             name = line.strip()
@@ -30,7 +34,6 @@ def parse_ingredients(ingredient_lines):
 
     return ingredients
 
-
 def parse_steps(text):
     steps_block = re.search(r"Étapes\s*:\s*\n(.+)", text, re.IGNORECASE | re.DOTALL)
     steps = []
@@ -39,14 +42,15 @@ def parse_steps(text):
         steps = [s.strip().replace("\n", " ") for s in step_lines]
     return steps
 
-
 def parse_recipe(text: str) -> dict:
     title_match = re.search(r"Titre\s*:\s*(.+)", text)
     prep_time_match = re.search(r"Préparation\s*:\s*(.+)", text)
     cook_time_match = re.search(r"Cuisson totale\s*:\s*(.+)", text)
     tags_match = re.search(r"Tags\s*:\s*(.+)", text)
 
-    title = title_match.group(1).strip() if title_match else "Sans titre"
+    title_raw = title_match.group(1).strip() if title_match else "Sans titre"
+    title = clean_title(title_raw)
+
     prep_time = prep_time_match.group(1).strip() if prep_time_match else None
     cook_time = cook_time_match.group(1).strip() if cook_time_match else None
     tags = [tag.strip() for tag in tags_match.group(1).split(",")] if tags_match else []
