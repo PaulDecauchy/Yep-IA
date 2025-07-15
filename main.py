@@ -3,12 +3,17 @@ from fastapi import FastAPI
 from api import recipes  # ← importe ton router (chemin selon ton projet)
 from api.recipes import router as recipe_router
 from api.recipes_batch import router as recipe_batch_router
+from api.recipes_without_ingredients import router as recipe_without_router
+from api.recipes_batch_without import router as recipe_batch_without_router
+
 
 
 app = FastAPI()
 
 app.include_router(recipe_router)
 app.include_router(recipe_batch_router)
+app.include_router(recipe_without_router)
+app.include_router(recipe_batch_without_router)
 
 
 
