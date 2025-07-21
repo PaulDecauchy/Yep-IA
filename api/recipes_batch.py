@@ -111,10 +111,10 @@ Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativem
             time.sleep(1.2)
             continue
 
-    unused_ingredients = list(provided_ingredients - used_ingredients)
+    unusedIngredients = list(provided_ingredients - used_ingredients)
 
     return {
         "recipes": recipes,
-        "unused_ingredients": unused_ingredients
+        "unused_ingredients": unusedIngredients
     }
 
