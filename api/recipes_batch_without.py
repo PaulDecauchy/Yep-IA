@@ -11,9 +11,9 @@ router = APIRouter(prefix="/recipes-batch", tags=["recipes"])
 @router.post("/generate-multiple-without-ingredients")
 def generate_multiple_recipes_without_ingredients(
     prompt: RecipeWithoutChainPrompt,
-    excluded_titles: List[str] = Body(default=[])
+    excludedTitles: List[str] = Body(default=[])
 ):
-    unique_titles = set(excluded_titles)
+    unique_titles = set(excludedTitles)
     recipes = []
     retries = 0
     max_recipes = 4

@@ -16,7 +16,7 @@ def parse_recipe_endpoint(result: str = Body(..., embed=True)):
 @router.post("/generate")
 def generate_recipe(
     prompt: RecipeChainPrompt,
-    excluded_titles: List[str] = Body(default=[])
+    excludedTitles: List[str] = Body(default=[])
 ):
     # Extraction des contraintes
     diets = prompt.tags.diet if prompt.tags else []
@@ -31,10 +31,10 @@ def generate_recipe(
 
     # Titre à exclure
     excluded_str = ""
-    if excluded_titles:
+    if excludedTitles:
         excluded_str = (
             "\nAttention : tu ne dois en aucun cas générer une recette avec un titre ou un thème proche de ceux-ci : "
-            + ", ".join(f'"{title}"' for title in excluded_titles) + "."
+            + ", ".join(f'"{title}"' for title in excludedTitles) + "."
         )
 
     # Contexte pour Mistral

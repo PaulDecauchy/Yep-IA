@@ -14,7 +14,7 @@ def parse_recipe_endpoint(result: str = Body(..., embed=True)):
 @router.post("/generate-without-ingredients")
 def generate_recipe_without_ingredients(
     prompt: RecipeWithoutChainPrompt,
-    excluded_titles: List[str] = Body(default=[])
+    excludedTitles: List[str] = Body(default=[])
 ):
     # ✅ Nouveau mapping des préférences
     diets = prompt.tags.diet if prompt.tags else []
@@ -24,10 +24,10 @@ def generate_recipe_without_ingredients(
     utensils_str = ", ".join(utensils) if utensils else "non précisé"
 
     excluded_str = ""
-    if excluded_titles:
+    if excludedTitles:
         excluded_str = (
             "\nAttention : tu ne dois en aucun cas générer une recette avec un titre ou un thème proche de ceux-ci : "
-            + ", ".join(f'"{title}"' for title in excluded_titles) + "."
+            + ", ".join(f'"{title}"' for title in excludedTitles) + "."
         )
 
     context_message = f"""
