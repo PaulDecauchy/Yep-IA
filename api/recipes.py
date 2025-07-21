@@ -96,9 +96,9 @@ Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativem
 
     provided_ingredients = {i.name.lower() for i in prompt.ingredients}
     used_ingredients = {i["name"].lower() for i in parsed_ingredients} if parsed_ingredients else set()
-    unused_ingredients = list(provided_ingredients - used_ingredients)
+    unusedIngredients = list(provided_ingredients - used_ingredients)
 
     return {
         "recipe": parsed,
-        "unused_ingredients": unused_ingredients,
+        "unusedIngredients": unusedIngredients,
     }
