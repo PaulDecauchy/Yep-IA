@@ -13,15 +13,17 @@ class Preferences(BaseModel):
     diet: Optional[List[str]] = []
     tag: Optional[List[str]] = []
     allergies: Optional[List[str]] = []
-
+    
 class RecipeChainPrompt(BaseModel):
-    title: Optional[str] = None
+    title: Optional[str] = None         # ≈ 30 caractères
+    subTitle: Optional[str] = None      # ≈ 20 caractères
     ingredients: List[Ingredient]
     utensils: Optional[List[str]] = []
     tags: Optional[Preferences] = None
 
 class RecipeWithoutChainPrompt(BaseModel):
-    title: Optional[str] = None
+    title: Optional[str] = None         # ≈ 30 caractères
+    subTitle: Optional[str] = None      # ≈ 20 caractères
     utensils: Optional[List[str]] = []
     tags: Optional[Preferences] = None
 
