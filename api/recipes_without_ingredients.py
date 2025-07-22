@@ -7,16 +7,18 @@ from services.parsing_recipe import parse_recipe
 
 router = APIRouter(prefix="/recipes", tags=["recipes"])
 
+
 @router.post("/parse-recipe")
 def parse_recipe_endpoint(result: str = Body(..., embed=True)):
     return parse_recipe(result)
+
 
 @router.post("/generate-without-ingredients")
 def generate_recipe_without_ingredients(
     prompt: RecipeWithoutChainPrompt,
     excludedTitles: List[str] = Body(default=[])
 ):
-    # ✅ Nouveau mapping des préférences
+    # Extraction des contraintes
     diets = prompt.tags.diet if prompt.tags else []
     tags = prompt.tags.tag if prompt.tags else []
     allergies = prompt.tags.allergies if prompt.tags else []
@@ -74,13 +76,22 @@ Utilise uniquement les ustensiles fournis. Respecte impérativement la structure
         {"role": "user", "content": user_prompt}
     ]
 
+    # Appel au LLM
     raw_response = ask_mistral(messages)
-    parsed = parse_recipe(raw_response)
 
-    parsed_ingredients = parsed.get("ingredients", [])
-    parsed_steps = parsed.get("steps", [])
+    # Parsing du texte généré
+    parsed_raw = parse_recipe(raw_response)
 
-    return {
-        "recipe": parsed,
+    # Construction finale avec tags injectés dans l’ordre voulu
+    parsed = {
+        "title": parsed_raw["title"],
+        "preparationTime": parsed_raw["preparationTime"],
+        "totalCookingTime": parsed_raw["totalCookingTime"],
+        "tags": prompt.tags.dict(),
+        "ingredients": parsed_raw["ingredients"],
+        "steps": parsed_raw["steps"]
     }
 
+    return {
+        "recipe": parsed
+    }

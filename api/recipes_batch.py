@@ -8,6 +8,7 @@ import time
 
 router = APIRouter(prefix="/recipes-batch", tags=["recipes"])
 
+
 @router.post("/generate-multiple")
 def generate_multiple_recipes(
     prompt: RecipeChainPrompt,
@@ -19,10 +20,7 @@ def generate_multiple_recipes(
     max_recipes = 4
     max_retries = 10
 
-    provided_ingredients = {i.name.lower() for i in prompt.ingredients}
-    used_ingredients = set()
-
-    # 🔁 Extraction des nouveaux champs
+    # 🔁 Extraction des contraintes
     diets = prompt.tags.diet if prompt.tags else []
     tags = prompt.tags.tag if prompt.tags else []
     allergies = prompt.tags.allergies if prompt.tags else []
@@ -87,34 +85,36 @@ Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativem
 
         try:
             raw_response = ask_mistral(messages)
-            parsed = parse_recipe(raw_response)
+            parsed_raw = parse_recipe(raw_response)
 
-            title = parsed.get("title", "").strip("* ").strip()
-
+            title = parsed_raw.get("title", "").strip("* ").strip()
             if (
-                not parsed.get("ingredients")
-                or not parsed.get("steps")
+                not parsed_raw.get("ingredients")
+                or not parsed_raw.get("steps")
                 or title.lower() in (t.lower() for t in unique_titles)
             ):
                 retries += 1
                 time.sleep(1.2)
                 continue
 
+            # ✅ Ajouter les tags dans le bon ordre
+            parsed = {
+                "title": parsed_raw["title"],
+                "preparationTime": parsed_raw["preparationTime"],
+                "totalCookingTime": parsed_raw["totalCookingTime"],
+                "tags": prompt.tags.dict(),
+                "ingredients": parsed_raw["ingredients"],
+                "steps": parsed_raw["steps"]
+            }
+
             unique_titles.add(title)
             recipes.append(parsed)
 
-            for ing in parsed["ingredients"]:
-                used_ingredients.add(ing["name"].lower())
-
-        except Exception as e:
+        except Exception:
             retries += 1
             time.sleep(1.2)
             continue
 
-    unusedIngredients = list(provided_ingredients - used_ingredients)
-
     return {
-        "recipes": recipes,
-        "unused_ingredients": unusedIngredients
+        "recipes": recipes
     }
-

@@ -20,7 +20,7 @@ def generate_recipe(
 ):
     # Extraction des contraintes
     diets = prompt.tags.diet if prompt.tags else []
-    tags = prompt.tags.tag if prompt.tags else []
+    tag = prompt.tags.tag if prompt.tags else []
     allergies = prompt.tags.allergies if prompt.tags else []
     utensils = prompt.utensils or []
 
@@ -47,7 +47,7 @@ Voici les contraintes permanentes à respecter pour chaque recette :
 - Préférences alimentaires :
   - Régimes : {", ".join(diets) if diets else "aucun"}
   - Allergies : {", ".join(allergies) if allergies else "aucune"}
-- Tags culinaires : {", ".join(tags) if tags else "aucun"}
+- Tags culinaires : {", ".join(tag) if tag else "aucun"}
 
 Tu dois toujours respecter ces contraintes.
 {excluded_str}
@@ -88,17 +88,20 @@ Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativem
 
     # Appel au LLM
     raw_response = ask_mistral(messages)
-    parsed = parse_recipe(raw_response)
 
-    # Sécurité : vérification des ingrédients utilisés
-    parsed_ingredients = parsed.get("ingredients", [])
-    parsed_steps = parsed.get("steps", [])
+    # Parsing recette
+    parsed_raw = parse_recipe(raw_response)
 
-    provided_ingredients = {i.name.lower() for i in prompt.ingredients}
-    used_ingredients = {i["name"].lower() for i in parsed_ingredients} if parsed_ingredients else set()
-    unusedIngredients = list(provided_ingredients - used_ingredients)
+    # Reconstruction dans le bon ordre
+    parsed = {
+        "title": parsed_raw["title"],
+        "preparationTime": parsed_raw["preparationTime"],
+        "totalCookingTime": parsed_raw["totalCookingTime"],
+        "tags": prompt.tags.dict(),
+        "ingredients": parsed_raw["ingredients"],
+        "steps": parsed_raw["steps"]
+    }
 
     return {
-        "recipe": parsed,
-        "unusedIngredients": unusedIngredients,
+        "recipe": parsed
     }
