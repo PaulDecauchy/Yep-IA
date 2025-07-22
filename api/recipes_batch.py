@@ -57,13 +57,14 @@ Voici les ingrédients disponibles :
 
 Génère une recette complète et réaliste en respectant toutes les contraintes, avec une **structure stricte**.
 
-Tu dois inclure **un titre généré** au début de la réponse.
+Tu dois inclure **un titre principal (≈ 30 caractères)** et un **sous-titre (≈ 20 caractères)** au début de la réponse.
 
-La réponse doit être structurée **exactement** ainsi :
+La structure d'en-tête doit être exactement :
 
-Titre :  
-Préparation : XX minutes  
-Cuisson totale : XX minutes  
+Titre : [titre principal]  
+Sous-titre : [sous-titre]   
+Préparation : XX [minutes]  
+Cuisson totale : XX [minutes]   
 Diet : [ex. végétarien, pauvre en glucides]  
 Tags : [ex. street food, indien]
 
@@ -100,6 +101,7 @@ Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativem
             # ✅ Ajouter les tags dans le bon ordre
             parsed = {
                 "title": parsed_raw["title"],
+                "subTitle": parsed_raw["subTitle"],
                 "preparationTime": parsed_raw["preparationTime"],
                 "totalCookingTime": parsed_raw["totalCookingTime"],
                 "tags": prompt.tags.dict(),

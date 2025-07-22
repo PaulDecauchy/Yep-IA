@@ -1,7 +1,7 @@
 import re
 
 def clean_title(title: str) -> str:
-    # Nettoie les caractères indésirables du titre
+    # Nettoie les caractères indésirables du titre ou sous-titre
     return re.sub(r"[^\w\sàâäéèêëîïôöùûüç'’*\-]", "", title).strip()
 
 def parse_ingredients(ingredient_lines):
@@ -43,11 +43,15 @@ def parse_steps(text):
 
 def parse_recipe(text: str) -> dict:
     title_match = re.search(r"Titre\s*:\s*(.+)", text)
+    subtitle_match = re.search(r"Sous[-\s]?titre\s*:\s*(.+)", text)
     prep_time_match = re.search(r"Préparation\s*:\s*(.+)", text)
     cook_time_match = re.search(r"Cuisson totale\s*:\s*(.+)", text)
 
     title_raw = title_match.group(1).strip() if title_match else "Sans titre"
+    subtitle_raw = subtitle_match.group(1).strip() if subtitle_match else ""
+
     title = clean_title(title_raw)
+    sub_title = clean_title(subtitle_raw)
 
     prep_time = prep_time_match.group(1).strip() if prep_time_match else None
     cook_time = cook_time_match.group(1).strip() if cook_time_match else None
@@ -60,6 +64,7 @@ def parse_recipe(text: str) -> dict:
 
     return {
         "title": title,
+        "subTitle": sub_title,
         "preparationTime": prep_time,
         "totalCookingTime": cook_time,
         "ingredients": ingredients,

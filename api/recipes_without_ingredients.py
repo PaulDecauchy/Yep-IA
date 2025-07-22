@@ -50,13 +50,14 @@ Tu dois toujours respecter ces contraintes.
     user_prompt = f"""
 Génère une recette complète et réaliste en respectant toutes les contraintes, avec une **structure stricte**.
 
-Tu dois inclure **un titre généré** au début de la réponse qui ne peut pas être **sans titre**.
+Tu dois inclure **un titre principal (≈ 30 caractères)** et un **sous-titre (≈ 20 caractères)** au début de la réponse.
 
-La réponse doit être structurée **exactement** ainsi :
+La structure d'en-tête doit être exactement :
 
-Titre :  
-Préparation : XX minutes  
-Cuisson totale : XX minutes  
+Titre : [titre principal]  
+Sous-titre : [sous-titre]  
+Préparation : XX [minutes]  
+Cuisson totale : XX [minutes]   
 Diet : [ex. végétarien, pauvre en glucides]  
 Tags : [ex. street food, indien]
 
@@ -85,6 +86,7 @@ Utilise uniquement les ustensiles fournis. Respecte impérativement la structure
     # Construction finale avec tags injectés dans l’ordre voulu
     parsed = {
         "title": parsed_raw["title"],
+        "subTitle": parsed_raw["subTitle"],
         "preparationTime": parsed_raw["preparationTime"],
         "totalCookingTime": parsed_raw["totalCookingTime"],
         "tags": prompt.tags.dict(),
