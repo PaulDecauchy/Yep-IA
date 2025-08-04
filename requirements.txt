@@ -37,3 +37,7 @@ websockets==15.0.1
 # Ajouts utiles au projet
 mistralai==1.9.1
 orjson==3.10.18
+
+pytest==8.2.2
+pytest-benchmark==4.0.0
+

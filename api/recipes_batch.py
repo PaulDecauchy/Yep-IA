@@ -52,32 +52,54 @@ Tu dois toujours respecter ces contraintes.
         ingredients_str = "\n".join(f"- {i.name}" for i in prompt.ingredients)
 
         user_prompt = f"""
-Voici les ingrédients disponibles :
-{ingredients_str}
+        Voici les ingrédients disponibles :
+        {ingredients_str}
 
-Génère une recette complète et réaliste en respectant toutes les contraintes, avec une **structure stricte**.
+        Génère une **seule recette complète et réaliste**, en respectant toutes les contraintes suivantes avec une **structure stricte**.
 
-Tu dois inclure **un titre principal (≈ 30 caractères)** et un **sous-titre (≈ 20 caractères)** au début de la réponse.
+        Tu dois inclure :
+        - Un **titre principal** (≈ 30 caractères)
+        - Un **sous-titre** (≈ 20 caractères)
+        - Un temps de **préparation** en minutes
+        - Un temps de **cuisson totale** en minutes (même si c’est juste pour couper, mélanger, ou laisser reposer)
 
-La structure d'en-tête doit être exactement :
+        La structure exacte doit être :
 
-Titre : [titre principal]  
-Sous-titre : [sous-titre]   
-Préparation : XX [minutes]  
-Cuisson totale : XX [minutes]   
-Diet : [ex. végétarien, pauvre en glucides]  
-Tags : [ex. street food, indien]
+        Titre : [titre principal]  
+        Sous-titre : [sous-titre]  
+        Préparation : [minutes]  
+        Cuisson totale : [minutes]  
+        Diet : [ex. végétarien, pauvre en glucides]  
+        Tags : [ex. street food, rapide]
 
-Ingrédients :  
-- [nom] : [quantité] [unité]  
-(ex. farine : 200 g, œufs : 2 pièce, sel : au goût)
+        Ingrédients :  
+        - [nom] : [quantité] [unité]  
+        (ex. farine : 200 g, œufs : 2 pièce, sel : au goût)
 
-Étapes :  
-1. ...  
-2. ...
+        Tu dois utiliser uniquement des **unités simples et standards sans parenthèses ni commentaires**.  
+        Exemples valides : "g", "ml", "pièce", "cuillère à soupe"  
+        Exemples interdits : "g (optionnel)", "pièce (environ ...)", "sel (au choix)"
+        Les recettes doivent être très différentes entre elles en termes de :
+        - préparation (cuisson, froid, plat mijoté, cuisson au four…),
+        - assemblage (salade, plat en sauce, gratin, bowl, wok, tarte…),
+        - structure du plat (plat végétarien, à base de riz, de pâtes, de viande…),
+        - inspiration (européenne, asiatique, familiale, express, repas du soir, à préparer à l'avance…).
 
-Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativement la structure. Aucun encadré, aucun JSON.
-""".strip()
+         **Ne jamais générer deux recettes trop similaires** dans leur nom, leurs étapes ou leur style. Chaque recette doit être **clairement identifiable comme une recette différente**.
+
+        Étapes :  
+        1. ...  
+        2. ...
+
+        Contraintes obligatoires :
+        - Tous les champs doivent être **strictement renseignés** : aucun champ ne doit être vide, `null` ou manquant.
+        - Les ingrédients doivent toujours contenir un **nom**, une **quantité numérique non nulle** et une **unité simple**.
+        - Si une quantité est difficile à estimer, utilise une valeur logique (ex : "1 cuillère à café", "au goût").
+        - N’utilise **aucun encadré**, **aucun JSON**, aucun format Markdown ou décoratif.
+        - Utilise uniquement les ingrédients et ustensiles fournis.
+
+        Respecte **strictement ce format**, et ne génère **qu'une seule recette** à chaque réponse.
+        """.strip()
 
         messages = [
             {"role": "system", "content": context_message},
@@ -104,7 +126,7 @@ Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativem
                 "subTitle": parsed_raw["subTitle"],
                 "preparationTime": parsed_raw["preparationTime"],
                 "totalCookingTime": parsed_raw["totalCookingTime"],
-                "tags": prompt.tags.dict(),
+                "tags": prompt.tags.model_dump(),
                 "ingredients": parsed_raw["ingredients"],
                 "steps": parsed_raw["steps"]
             }

@@ -1,8 +1,20 @@
 import re
+import unicodedata
+
 
 def clean_title(text: str) -> str:
-    # Supprime les caractères indésirables (*, ", etc.) tout en conservant les accents, tirets et apostrophes
+    # Remplace les tirets spéciaux par un tiret simple
+    text = text.replace("–", "-").replace("—", "-")
+
+    # Normalise le texte pour uniformiser les accents & caractères spéciaux
+    text = unicodedata.normalize("NFKC", text)
+
+    # Supprime les caractères indésirables sauf lettres, chiffres, accents, tirets et apostrophes
     cleaned = re.sub(r"[^\w\sàâäéèêëîïôöùûüç'’\-]", "", text)
+
+    # Nettoie les espaces en trop
+    cleaned = re.sub(r"\s+", " ", cleaned)
+
     return cleaned.strip()
 
 def parse_ingredients(ingredient_lines):
@@ -18,12 +30,12 @@ def parse_ingredients(ingredient_lines):
             unit = match.group("unit").strip() if match.group("unit") else "au goût"
 
             try:
-                quantity = float(quantity_str.replace(",", ".")) if quantity_str else None
+                quantity = float(quantity_str.replace(",", ".")) if quantity_str else 1.0
             except ValueError:
-                quantity = None
+                quantity = 1.0
         else:
             name = clean_title(line.strip())
-            quantity = None
+            quantity = 1.0
             unit = "au goût"
 
         ingredients.append({
@@ -33,6 +45,7 @@ def parse_ingredients(ingredient_lines):
         })
 
     return ingredients
+
 
 def parse_steps(text: str):
     steps_block = re.search(r"Étapes\s*:\s*\n(.+)", text, re.IGNORECASE | re.DOTALL)

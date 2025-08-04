@@ -6,7 +6,7 @@ load_dotenv()
 api_key = os.getenv("MISTRAL_API_KEY")
 
 client = Mistral(api_key=api_key)
-model_name = "mistral-medium-latest"
+model_name = "mistral-small-latest"
 
 def ask_mistral(messages: list[dict]) -> str:
     """

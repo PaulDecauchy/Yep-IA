@@ -61,6 +61,8 @@ Voici les ingrédients disponibles :
 Génère une recette complète et réaliste en respectant toutes les contraintes, avec une **structure stricte**.
 
 Tu dois inclure **un titre principal (≈ 30 caractères)** et un **sous-titre (≈ 20 caractères)** au début de la réponse.
+Tu dois indiquer une **valeur logique et réaliste** pour le temps de cuisson total, même si la cuisson est minimale (ex : coupe, mélange, repos…).
+
 
 La structure d'en-tête doit être exactement :
 
@@ -74,12 +76,24 @@ Tags : [liste des tags si présents]
 Ingrédients :  
 - [nom] : [quantité] [unité]  
 (ex. farine : 200 g, œufs : 2 pièce, sel : au goût)
+Tu dois utiliser uniquement des **unités simples et standards sans parenthèses ni commentaires**.  
+Par exemple : "g", "ml", "pièce", "cuillère à soupe", etc.  
+N'écris **jamais** : "g (optionnel, ...)", ni "pièce (environ ...)".
 
 Étapes :  
 1. ...  
 2. ...
 
 Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativement la structure. Aucun encadré, aucun JSON.
+
+Rappel important :
+Tous les champs de la recette doivent être **strictement renseignés** :
+- Aucun champ ne doit être `null`, vide ou manquant.
+- Les champs obligatoires incluent : titre, sous-titre, préparation, cuisson totale, diet, tags, ingrédients (avec nom, quantité et unité), ustensiles et étapes.
+- Si une valeur est difficile à définir, choisis une valeur **logique et réaliste**, même approximative (ex : "au goût", "1 pièce", "15 minutes").
+
+N'utilise jamais de parenthèses, commentaires, ou formules vagues.  
+Le format doit rester **propre, clair et 100% structuré**.
 """.strip()
 
     messages = [
@@ -99,7 +113,7 @@ Utilise uniquement les ingrédients et ustensiles fournis. Respecte impérativem
     "subTitle": parsed_raw["subTitle"],
     "preparationTime": parsed_raw["preparationTime"],
     "totalCookingTime": parsed_raw["totalCookingTime"],
-    "tags": prompt.tags.dict(),
+    "tags": prompt.tags.model_dump(),
     "ingredients": parsed_raw["ingredients"],
     "steps": parsed_raw["steps"]
     }

@@ -99,7 +99,7 @@ Utilise uniquement les ustensiles fournis. Respecte impérativement la structure
                 "subTitle": parsed_raw["subTitle"],
                 "preparationTime": parsed_raw["preparationTime"],
                 "totalCookingTime": parsed_raw["totalCookingTime"],
-                "tags": prompt.tags.dict(),
+                "tags": prompt.tags.model_dump(),
                 "ingredients": parsed_raw["ingredients"],
                 "steps": parsed_raw["steps"]
             }
