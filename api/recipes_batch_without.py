@@ -65,6 +65,8 @@ Tags : [ex. street food, indien]
 
 Ingrédients :  
 - [nom] : [quantité] [unité]  
+Ne rajoute pas de texte après les unités
+
 (ex. farine : 200 g, œufs : 2 pièce, sel : au goût)
 
 Étapes :  
