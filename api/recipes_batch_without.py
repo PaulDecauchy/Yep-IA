@@ -50,31 +50,39 @@ Tu dois toujours respecter ces contraintes.
 """.strip()
 
         user_prompt = f"""
-Génère une recette complète et réaliste en respectant toutes les contraintes, avec une **structure stricte**.
+        Génère une recette complète et réaliste en respectant toutes les contraintes, avec une **structure stricte**.
 
-Tu dois inclure **un titre principal (≈ 30 caractères)** et un **sous-titre (≈ 20 caractères)** au début de la réponse.
+        Tu dois inclure **un titre principal (≈ 30 caractères)** et un **sous-titre (≈ 20 caractères)** au début de la réponse.
 
-La structure d'en-tête doit être exactement :
+        La structure d'en-tête doit être exactement :
 
-Titre : [titre principal]  
-Sous-titre : [sous-titre]  
-Préparation : XX [minutes]  
-Cuisson totale : XX [minutes]    
-Diet : [ex. végétarien, pauvre en glucides]  
-Tags : [ex. street food, indien]
+        Titre : [titre principal]  
+        Sous-titre : [sous-titre]  
+        Préparation : XX [minutes]  
+        Cuisson totale : XX [minutes]  
+        Diet : [ex. végétarien, pauvre en glucides]  
+        Tags : [ex. street food, indien]
 
-Ingrédients :  
-- [nom] : [quantité] [unité]  
-Ne rajoute pas de texte après les unités
+        Ingrédients :  
+        - [nom] : [quantité] [unité]  
+        (ex. farine : 200 g, lait : 20 cl, œufs : 2 pcs)
 
-(ex. farine : 200 g, œufs : 2 pièce, sel : au goût)
+        Les unités autorisées sont UNIQUEMENT : "g", "cl", "pcs".  
+        Exemples valides : farine : 200 g, lait : 20 cl, œufs : 2 pcs  
+        Exemples interdits : "g (optionnel)", "ml", "pièce", "cuillère à soupe", "sel au goût"
 
-Étapes :  
-1. ...  
-2. ...
+        Étapes :  
+        1. ...  
+        2. ...
 
-Utilise uniquement les ustensiles fournis. Respecte impérativement la structure. Aucun encadré, aucun JSON.
-""".strip()
+        Contraintes obligatoires :
+        - Tous les champs doivent être **strictement renseignés** : aucun champ ne doit être vide, `null` ou manquant.
+        - Les ingrédients doivent toujours contenir un **nom**, une **quantité numérique non nulle** et une **unité autorisée (g, cl, pcs)**.
+        - Si une quantité est difficile à estimer, choisis une valeur logique (ex : 5 g, 1 pcs).
+        - Utilise uniquement les ustensiles fournis.
+        - Respecte impérativement la structure donnée.
+        - N’utilise **aucun encadré**, **aucun JSON**, aucun format Markdown ou décoratif.
+        """.strip()
 
         messages = [
             {"role": "system", "content": context_message},

@@ -74,18 +74,19 @@ Tu dois toujours respecter ces contraintes.
 
         Ingrédients :  
         - [nom] : [quantité] [unité]  
-        (ex. farine : 200 g, œufs : 2 pièce, sel : au goût)
+        (ex. farine : 200 g, lait : 20 cl, œufs : 2 pcs)
 
-        Tu dois utiliser uniquement des **unités simples et standards sans parenthèses ni commentaires**.  
-        Exemples valides : "g", "ml", "pièce", "cuillère à soupe"  
-        Exemples interdits : "g (optionnel)", "pièce (environ ...)", "sel (au choix)"
+        Les unités autorisées sont UNIQUEMENT : "g", "cl", "pcs".  
+        Exemples valides : farine : 200 g, lait : 20 cl, œufs : 2 pcs  
+        Exemples interdits : "g (optionnel)", "ml", "pièce", "cuillère à soupe", "sel au goût"
+
         Les recettes doivent être très différentes entre elles en termes de :
         - préparation (cuisson, froid, plat mijoté, cuisson au four…),
         - assemblage (salade, plat en sauce, gratin, bowl, wok, tarte…),
         - structure du plat (plat végétarien, à base de riz, de pâtes, de viande…),
         - inspiration (européenne, asiatique, familiale, express, repas du soir, à préparer à l'avance…).
 
-         **Ne jamais générer deux recettes trop similaires** dans leur nom, leurs étapes ou leur style. Chaque recette doit être **clairement identifiable comme une recette différente**.
+        **Ne jamais générer deux recettes trop similaires** dans leur nom, leurs étapes ou leur style. Chaque recette doit être **clairement identifiable comme une recette différente**.
 
         Étapes :  
         1. ...  
@@ -93,8 +94,8 @@ Tu dois toujours respecter ces contraintes.
 
         Contraintes obligatoires :
         - Tous les champs doivent être **strictement renseignés** : aucun champ ne doit être vide, `null` ou manquant.
-        - Les ingrédients doivent toujours contenir un **nom**, une **quantité numérique non nulle** et une **unité simple**.
-        - Si une quantité est difficile à estimer, utilise une valeur logique (ex : "1 cuillère à café", "au goût").
+        - Les ingrédients doivent toujours contenir un **nom**, une **quantité numérique non nulle** et une **unité autorisée (g, cl, pcs)**.
+        - Si une quantité est difficile à estimer, choisis une valeur logique (ex : 5 g, 1 pcs).
         - N’utilise **aucun encadré**, **aucun JSON**, aucun format Markdown ou décoratif.
         - Utilise uniquement les ingrédients et ustensiles fournis.
 
