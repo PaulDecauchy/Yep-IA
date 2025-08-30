@@ -1,0 +1,3 @@
+[run]
+omit =
+    api/recipes_with_json.py
