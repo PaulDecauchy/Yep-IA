@@ -1,8 +1,8 @@
 {
   "recipe": {
-    "title": "Gratin de pommes de terre crémeux",
+    "title": "Gratin de Pommes de Terre Crémeux",
     "subTitle": "Douceur hivernale",
-    "preparationTime": "15",
+    "preparationTime": "10",
     "totalCookingTime": "45",
     "tags": {
       "diet": [
@@ -24,24 +24,15 @@
         "name": "crème",
         "quantity": 200.0,
         "unit": "ml"
-      },
-      {
-        "name": "sel",
-        "quantity": 1.0,
-        "unit": "pincée"
-      },
-      {
-        "name": "poivre",
-        "quantity": 1.0,
-        "unit": "pincée"
       }
     ],
     "steps": [
       "Préchauffer le four à 180°C.",
-      "Éplucher les pommes de terre et les couper en fines rondelles.",
-      "Dans un saladier, mélanger les rondelles de pommes de terre avec la crème, le sel et le poivre.",
-      "Transvaser le mélange dans un plat à gratin.",
-      "Enfourner pendant 45 minutes, jusqu'à ce que les pommes de terre soient tendres et dorées."
+      "Éplucher et couper les pommes de terre en fines rondelles.",
+      "Dans un plat à gratin, disposer les rondelles de pommes de terre en couches.",
+      "Verser la crème uniformément sur les pommes de terre.",
+      "Enfourner le plat à gratin et laisser cuire pendant 45 minutes, jusqu'à ce que les pommes de terre soient tendres et dorées.",
+      "Sortir du four et laisser reposer quelques minutes avant de servir."
     ]
   }
 }
