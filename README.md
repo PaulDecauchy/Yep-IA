@@ -123,11 +123,6 @@ La configuration des tests se trouve dans le fichier `pytest.ini`.
 4. Poussez vers la branche (`git push origin feature/AmazingFeature`)
 5. Ouvrez une Pull Request
 
-## Notes de développement
-
-- Utilisez `--reload` pendant le développement pour le rechargement automatique
-- Configurez correctement l'host et le port selon votre environnement de test
-- Testez localement avant de merger sur main
 
 ## Commandes utiles
 
